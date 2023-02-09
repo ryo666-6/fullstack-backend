@@ -1,10 +1,10 @@
 package com.portfoilo.fullstackbackend.Model;
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
 @Data
@@ -14,6 +14,7 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Nullable
     @Column(name = "user_id", nullable = false)
     private Integer user_id;
 
@@ -34,6 +35,25 @@ public class Todo {
 
     @Column(name = "priority")
     private Integer priority;
+
+    @Nullable
+    @Column(name = "is_completed")
+    private Integer is_completed;
+
+    public Todo() {
+
+    }
+
+    public Todo(Integer user_id, String title, String description, String due_date, Integer priority, Integer is_completed) {
+        this.user_id = user_id;
+        this.title = title;
+        this.description = description;
+        this.due_date = due_date;
+        this.priority = priority;
+        this.is_completed = is_completed;
+    }
+
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id", insertable=false, updatable=false)

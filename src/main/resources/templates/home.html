@@ -28,7 +28,7 @@
 <div>
     <table class="table table-bordered table-striped">
         <thead>
-            <tr th:each="list:${list}">
+            <tr>
                 <th>Title</th>
                 <th>Description</th>
                 <th>DueDate</th>
@@ -39,7 +39,7 @@
                 <td th:text="${list.title}">
                 <td th:text="${list.description}">
                 <td th:text="${list.due_date}">
-                <input type="checkbox" name="is_completed" value="1">完了
+                <input th:field="*{is_completed}" type="checkbox" name="is_completed" value="1">完了
             </tr>
         </tbody>
     </table>

@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -28,31 +27,23 @@ public class TodoController {
     TodoService todoService;
 
     @GetMapping("/todo/{id}")
-    public String home(@PathVariable("id")Integer id, Model model,
-                       @AuthenticationPrincipal UserDetailsImpl userDetails, User user, Todo todo) {
+    public String home(@PathVariable("id")Integer id, Model model, User user, Todo todo) {
         Integer userId = user.getId();
         //if文で、今のユーザーidとurlのユーザーを比較して、違ったらログインページへリダイレクト
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
-
-        model.addAttribute("todo", new Todo());
+        model.addAttribute("todo", new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDue_date(), todo.getPriority(), todo.getIs_completed()));
         return "home";
     }
 
     @PostMapping("/todo/{id}")
-    public String createTodo(@Validated Todo todo, @PathVariable("id")Integer id , BindingResult result, Model model, User user) {
-        if(result.hasErrors()) {
-//            Integer userId = user.getId();
-//            List<Todo> list = todoRepository.find(userId);
-//            model.addAttribute("list", list);
-
-            model.addAttribute("todo", todo);
-//            model.addAttribute("todo", todo);
+    public String createTodo(@Validated Todo todo, @PathVariable("id")Integer id , BindingResult result, User user) {
+        if(result.hasErrors()){
             return "home";
         }
-//        todo.getUser_id() = user.getId();
-        model.addAttribute("todo",todo);
-        todoService.addTodo(todo);
+
+        Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDue_date(), todo.getPriority(), todo.getIs_completed());
+        todoService.addTodo(userTodo);
         return "redirect:/todo/{id}";
     }
 }
