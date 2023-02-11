@@ -52,10 +52,4 @@ public class Todo {
         this.priority = priority;
         this.is_completed = is_completed;
     }
-
-
-
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", insertable=false, updatable=false)
-//    private User user;
 }

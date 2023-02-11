@@ -19,4 +19,9 @@ public class TodoService {
     public void addTodo(Todo todo) {
         todoRepository.save(todo);
     }
+
+    public void editTodo(Todo todo) {
+        todoRepository.findById(todo.getUser_id());
+    }
+
 }

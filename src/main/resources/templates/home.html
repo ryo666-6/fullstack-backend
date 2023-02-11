@@ -1,52 +1,54 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link th:href="@{/css/home.css}" rel="stylesheet"/>
     <title>Todo管理</title>
 </head>
 <body>
-<div th:text="'こんにちは ' + ${#authentication.name} + ' さん'"></div>
 <h1>Todo管理</h1>
-<h2>追加</h2>
 <div>
     <form method="post" th:action="@{/todo/}+${id}" th:object="${todo}">
         <p th:errors="*{title}" class="todo-error-message"></p>
         <input th:field="*{title}" class="add-input" type="text" placeholder="タイトル">
         <input th:field="*{description}" class="add-input" type="text" placeholder="詳細">
-        <input th:field="*{due_date}" class="add-input-third" type="text" placeholder="例: 2023/??/??"><br/>
+        <input th:field="*{due_date}" class="add-input-third" type="date" placeholder="例: 2023/??/??"><br/>
         <div class="add-form">
             <span>Todoの重要度</span>
             <input th:field="*{priority}" type="radio" name="priority" value="3" checked>大
             <input th:field="*{priority}" type="radio" name="priority" value="2">中
-            <input th:field="*{priority}" type="radio" name="priority" value="1">小<br/>
+            <input th:field="*{priority}" type="radio" name="priority" value="1">小
         </div>
         <button type="submit" class="add-btn">追加</button>
     </form>
 </div>
+
 <h2>やること一覧</h2>
+<form method="post" th:action="@{/todo/edit/}+${id}" th:each="list:${list}">
+    <input type="hidden" name="userId" th:value="${list.user_id}">
+    <input type="text" name="title" th:value="${list.title}">
+    <input type="text" name="description" th:value="${list.description}">
+    <input type="date" name="due_date" th:value="${list.due_date}">
+    <input type="checkbox" name="is_completed" value="1">
+    <input type="submit" value="更新">
+</form>
+
 <div>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>DueDate</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="list:${list}">
-                <td th:text="${list.title}">
-                <td th:text="${list.description}">
-                <td th:text="${list.due_date}">
-                <input th:field="*{is_completed}" type="checkbox" name="is_completed" value="1">完了
-            </tr>
-        </tbody>
-    </table>
+    <button type="button" class="btn btn-primary p-3"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        完了したTodo表示
+    </button>
+    <div class="collapse" id="collapseExample">
+        <form class="border p-3" th:action="@{/update}" th:each="list:${list}">
+            <input type="text" name="title" th:value="${list.title}">
+            <input type="submit" value="削除">
+        </form>
+    </div>
 </div>
 <form th:action="@{/logout}" method="post">
     <button class="logout-button" type="submit" value="ログアウト">ログアウト</button>
 </form>
-<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
