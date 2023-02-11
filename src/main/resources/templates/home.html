@@ -12,7 +12,7 @@
         <p th:errors="*{title}" class="todo-error-message"></p>
         <input th:field="*{title}" class="add-input" type="text" placeholder="タイトル">
         <input th:field="*{description}" class="add-input" type="text" placeholder="詳細">
-        <input th:field="*{due_date}" class="add-input-third" type="date" placeholder="例: 2023/??/??"><br/>
+        <input th:field="*{dueDate}" class="add-input-third" type="date" placeholder="例: 2023/??/??"><br/>
         <div class="add-form">
             <span>Todoの重要度</span>
             <input th:field="*{priority}" type="radio" name="priority" value="3" checked>大
@@ -24,12 +24,12 @@
 </div>
 
 <h2>やること一覧</h2>
-<form method="post" th:action="@{/todo/edit/}+${id}" th:each="list:${list}">
-    <input type="hidden" name="userId" th:value="${list.user_id}">
+<form method="post" th:action="@{/todo/}+${id}" th:each="list:${list}">
+    <input type="hidden" name="userId" th:value="${list.userId}">
     <input type="text" name="title" th:value="${list.title}">
     <input type="text" name="description" th:value="${list.description}">
-    <input type="date" name="due_date" th:value="${list.due_date}">
-    <input type="checkbox" name="is_completed" value="1">
+    <input type="date" name="dueDate" th:value="${list.dueDate}">
+    <input type="checkbox" name="isCompleted" value="1">
     <input type="submit" value="更新">
 </form>
 

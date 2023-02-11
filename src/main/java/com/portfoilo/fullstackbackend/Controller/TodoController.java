@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,29 +23,36 @@ public class TodoController {
     TodoService todoService;
 
     @GetMapping("/todo/{id}")
-    public String home(@PathVariable("id")Integer id, Model model, User user, Todo todo) {
+    public String home(Model model, User user, Todo todo, @PathVariable("id")Integer id) {
         Integer userId = user.getId();
         //if文で、今のユーザーidとurlのユーザーを比較して、違ったらログインページへリダイレクト
+        //null回避する
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
-        model.addAttribute("todo", new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDue_date(), todo.getPriority(), todo.getIs_completed()));
+        model.addAttribute("todo", new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted()));
         return "home";
     }
 
     @PostMapping("/todo/{id}")
-    public String createTodo(@Validated Todo todo, @PathVariable("id")Integer id , BindingResult result, User user) {
+    public String createTodo(@Validated Todo todo,BindingResult result, User user) {
         if(result.hasErrors()){
             return "home";
         }
 
-        Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDue_date(), todo.getPriority(), todo.getIs_completed());
+        Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
         todoService.addTodo(userTodo);
         return "redirect:/todo/{id}";
     }
 
-    @RequestMapping("/todo/edit/{id}")
+    @PostMapping("/todo/edit/{id}")
     public String editTodo(Todo todo, User user, @PathVariable("id")Integer id) {
         return "redirect:/todo/{id}";
-
     }
+
+    @PutMapping("/todo/update/{id}")
+    public String updateTodo(Todo todo) {
+        return "redirect:/todo/{id}";
+    }
+
+
 }
