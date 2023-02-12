@@ -46,11 +46,13 @@ public class TodoController {
 
     @PostMapping("/todo/edit/{id}")
     public String editTodo(Todo todo, User user, @PathVariable("id")Integer id) {
+        System.out.println("edit");
         return "redirect:/todo/{id}";
     }
 
-    @PutMapping("/todo/update/{id}")
-    public String updateTodo(Todo todo) {
+    @PostMapping("/todo/update/{id}")
+    public String updateTodo(Todo todo, @PathVariable("id")Integer id) {
+        System.out.println("update");
         return "redirect:/todo/{id}";
     }
 
