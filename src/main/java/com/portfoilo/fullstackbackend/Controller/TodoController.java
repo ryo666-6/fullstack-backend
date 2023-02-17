@@ -42,14 +42,13 @@ public class TodoController {
         if(result.hasErrors()){
             return "redirect:/todo/{id}";
         }
-
         Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
         todoService.addTodo(userTodo);
         return "redirect:/todo/{id}";
     }
 
     @PostMapping("/todo/update/{id}")
-    public String doneTodo(@RequestParam(name="id")Integer todoId) {
+    public String doneTodo(@RequestParam(name = "id",required = false)Integer todoId) {
         Todo updateTodo = todoService.findById(todoId);
         updateTodo.setIsCompleted(true);
         todoService.addTodo(updateTodo);
@@ -57,8 +56,16 @@ public class TodoController {
     }
 
     @PostMapping("/todo/edit/{id}")
-    public String editTodo() {
+    public String editTodo(@RequestParam(name = "id",required = false)Integer todoId,Todo todo,BindingResult result, User user) {
         System.out.println("edit");
+//        Todo editTodo = todoService.findById(todoId);
+        return "redirect:/todo/{id}";
+    }
+
+    @PostMapping("/todo/delete/{id}")
+    public String deleteTodo() {
+        System.out.println("delete");
+        todoService.deleteAllTodo();
         return "redirect:/todo/{id}";
     }
 }

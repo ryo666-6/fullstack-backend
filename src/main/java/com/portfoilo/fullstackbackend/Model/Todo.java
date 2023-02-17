@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "todos")
 public class Todo {
     @Id
-    @Nullable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

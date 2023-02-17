@@ -25,8 +25,8 @@
 
 <h2>やること一覧</h2>
 <form method="post" th:action="@{/todo/edit/}+${id}" th:each="list:${list}" th:object="${todo}">
-    <div th:if="${!todo.isCompleted}">
-    <input type="checkbox" th:id="${todo.id}" th:value="${todo.id}" th:field="*{isCompleted}" form="done-todo">
+    <div th:if="${!list.isCompleted}">
+    <input type="checkbox" th:value="${list.id}" name="id" form="done-todo">
     <input type="hidden" name="userId" th:value="${list.userId}">
     <input type="text" name="title" th:value="${list.title}">
     <input type="text" name="description" th:value="${list.description}">
@@ -44,9 +44,9 @@
         完了したTodo表示
     </button>
     <div class="collapse" id="collapseExample">
-        <form class="border p-3" th:action="@{/todo/delete/}+${id}" th:each="todo:${todo}">
-            <div th:if="${todo.isCompleted}">
-                <input type="text" name="title" th:value="${todo.title}">
+        <form class="border p-3" method="post" th:action="@{/todo/delete/}+${id}" th:each="list:${list}">
+            <div th:if="${list.isCompleted}">
+                <input type="text" name="title" th:value="${list.title}">
                 <input type="submit" value="削除">
             </div>
         </form>

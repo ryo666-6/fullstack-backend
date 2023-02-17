@@ -5,6 +5,7 @@ import com.portfoilo.fullstackbackend.Repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,17 @@ public class TodoService {
 
     public Todo findById(Integer id) {
         Optional<Todo> updateTodo = todoRepository.findById(id);
-        return updateTodo.orElseGet(updateTodo::get);
+        return updateTodo.get();
+    }
+
+    public void deleteAllTodo() {
+        List<Todo> allTodo = todoRepository.findAll();
+        List<Todo> doneList = new ArrayList<>();
+        for (Todo todo : allTodo) {
+            if (todo.getIsCompleted()) {
+                doneList.add(todo);
+            }
+        }
+        todoRepository.deleteAll(doneList);
     }
 }
