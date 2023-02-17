@@ -25,25 +25,30 @@
 
 <h2>やること一覧</h2>
 <form method="post" th:action="@{/todo/edit/}+${id}" th:each="list:${list}" th:object="${todo}">
+    <div th:if="${!todo.isCompleted}">
+    <input type="checkbox" th:id="${todo.id}" th:value="${todo.id}" th:field="*{isCompleted}" form="done-todo">
     <input type="hidden" name="userId" th:value="${list.userId}">
     <input type="text" name="title" th:value="${list.title}">
     <input type="text" name="description" th:value="${list.description}">
     <input type="date" name="dueDate" th:value="${list.dueDate}">
     <input type="submit" value="更新">
-    <input type="checkbox" th:field="*{isCompleted}" value="1" form="done-todo">
+    </div>
 </form>
-<form method="post" id="done-todo" th:action="@{/todo/update/}+${id}" th:object="${todo}">
+<form method="post" id="done-todo" th:action="@{/todo/update/}+${id}">
+    <input type="hidden" name="id" th:value="${todo.id}">
     <input type="submit" value="完了">
 </form>
 
 <div>
-    <button type="button" class="btn btn-primary p-3"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <button type="button" class="btn btn-primary p-3" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         完了したTodo表示
     </button>
     <div class="collapse" id="collapseExample">
-        <form class="border p-3" th:action="@{/update}" th:each="list:${list}">
-            <input type="text" name="title" th:value="${list.title}">
-            <input type="submit" value="削除">
+        <form class="border p-3" th:action="@{/todo/delete/}+${id}" th:each="todo:${todo}">
+            <div th:if="${todo.isCompleted}">
+                <input type="text" name="title" th:value="${todo.title}">
+                <input type="submit" value="削除">
+            </div>
         </form>
     </div>
 </div>

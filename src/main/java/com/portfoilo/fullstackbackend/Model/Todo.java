@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "todos")
 public class Todo {
     @Id
+    @Nullable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -36,15 +37,15 @@ public class Todo {
     @Column(name = "priority")
     private Integer priority;
 
-    @Nullable
+    @NotNull
     @Column(name = "is_completed")
-    private Integer isCompleted;
+    private Boolean isCompleted = false;
 
     public Todo() {
 
     }
 
-    public Todo(Integer userId, String title, String description, String dueDate, Integer priority, Integer isCompleted) {
+    public Todo(Integer userId, String title, String description, String dueDate, Integer priority, Boolean isCompleted) {
         this.userId = userId;
         this.title = title;
         this.description = description;

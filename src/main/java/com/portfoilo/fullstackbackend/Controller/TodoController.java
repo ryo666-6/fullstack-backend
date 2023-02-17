@@ -24,7 +24,11 @@ public class TodoController {
 
     @GetMapping("/todo/{id}")
     public String home(Model model, User user, Todo todo, @PathVariable("id")Integer id) {
+
         Integer userId = user.getId();
+        if(userId == null) {
+            return "redirect:/todo/{id}";
+        }
         //if文で、今のユーザーidとurlのユーザーを比較して、違ったらログインページへリダイレクト
         //null回避する
         List<Todo> list = todoRepository.find(userId);
@@ -36,7 +40,7 @@ public class TodoController {
     @PostMapping("/todo/{id}")
     public String createTodo(@Validated Todo todo,BindingResult result, User user) {
         if(result.hasErrors()){
-            return "home";
+            return "redirect:/todo/{id}";
         }
 
         Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
@@ -44,17 +48,17 @@ public class TodoController {
         return "redirect:/todo/{id}";
     }
 
+    @PostMapping("/todo/update/{id}")
+    public String doneTodo(@RequestParam(name="id")Integer todoId) {
+        Todo updateTodo = todoService.findById(todoId);
+        updateTodo.setIsCompleted(true);
+        todoService.addTodo(updateTodo);
+        return "redirect:/todo/{id}";
+    }
+
     @PostMapping("/todo/edit/{id}")
-    public String editTodo(Todo todo, User user, @PathVariable("id")Integer id) {
+    public String editTodo() {
         System.out.println("edit");
         return "redirect:/todo/{id}";
     }
-
-    @PostMapping("/todo/update/{id}")
-    public String updateTodo(Todo todo, @PathVariable("id")Integer id) {
-        System.out.println("update");
-        return "redirect:/todo/{id}";
-    }
-
-
 }

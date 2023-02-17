@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -20,7 +21,8 @@ public class TodoService {
         todoRepository.save(todo);
     }
 
-//    public void update(Todo todo) {
-//        todoRepository
-//    }
+    public Todo findById(Integer id) {
+        Optional<Todo> updateTodo = todoRepository.findById(id);
+        return updateTodo.orElseGet(updateTodo::get);
+    }
 }
