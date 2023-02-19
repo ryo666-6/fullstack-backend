@@ -27,7 +27,7 @@ public class TodoService {
         return todo.get();
     }
 
-    public List<Todo> orderByDate(Todo todo) {
+    public List<Todo> sortByDate() {
         return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "dueDate"));
     }
 }

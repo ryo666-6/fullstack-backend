@@ -25,9 +25,11 @@
 
 <h2>やること一覧</h2>
 <div>
+
     <form method="post" th:action="@{/todo/sort/}+${id}">
         <button type="submit">日付順に並び替える</button>
     </form>
+
     <form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
         <div th:if="${!list.isCompleted}">
             <input type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">

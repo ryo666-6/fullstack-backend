@@ -44,13 +44,11 @@ public class TodoController {
         }
         Todo userTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted());
         todoService.addTodo(userTodo);
-        System.out.println(userTodo);
         return "redirect:/todo/{id}";
     }
 
     @PostMapping("/todo/update/{id}")
     public String doneTodo(@RequestParam(name = "todoId",required = false)Integer todoId) {
-        System.out.println(todoId);
         Todo updateTodo = todoService.findById(todoId);
         updateTodo.setIsCompleted(true);
         todoService.addTodo(updateTodo);
@@ -58,24 +56,20 @@ public class TodoController {
     }
 
     @PostMapping("/todo/sort/{id}")
-    public String sortByDate(Todo todo, User user) {
+    public String sortByDate() {
         System.out.println("sort");
-        Todo sortedTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted());
-        todoService.orderByDate(sortedTodo);
+        List<Todo> sortedTodo = todoService.sortByDate();
         System.out.println(sortedTodo);
         return "redirect:/todo/{id}";
     }
 
     @PostMapping("/todo/edit/{id}")
     public String editTodo(@RequestParam(name = "editId",required = false)Integer editId, Todo todo, User user ,Model model) {
-        System.out.println("edit");
-        System.out.println(editId);
         Todo editTodo = todoService.findById(editId);
         Integer userId = user.getId();
         Todo nextTodo = new Todo(editTodo.getId(),user.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted(), todo.getIsDeleted());
         todoService.addTodo(nextTodo);
         model.addAttribute("nextTodo", nextTodo);
-        System.out.println(nextTodo);
         return "redirect:/todo/{id}";
     }
 
