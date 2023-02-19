@@ -40,11 +40,15 @@ public class Todo {
     @Column(name = "is_completed")
     private Boolean isCompleted = false;
 
+    @NotNull
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
+
     public Todo() {
 
     }
 
-    public Todo(Integer id, Integer userId, String title, String description, String dueDate, Integer priority, Boolean isCompleted) {
+    public Todo(Integer id, Integer userId, String title, String description, String dueDate, Integer priority, Boolean isCompleted, Boolean isDeleted) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -52,5 +56,6 @@ public class Todo {
         this.dueDate = dueDate;
         this.priority = priority;
         this.isCompleted = isCompleted;
+        this.isDeleted = isDeleted;
     }
 }

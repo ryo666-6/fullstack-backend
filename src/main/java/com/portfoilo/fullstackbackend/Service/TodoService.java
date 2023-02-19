@@ -3,9 +3,9 @@ package com.portfoilo.fullstackbackend.Service;
 import com.portfoilo.fullstackbackend.Model.Todo;
 import com.portfoilo.fullstackbackend.Repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +27,7 @@ public class TodoService {
         return todo.get();
     }
 
-    public void deleteAllTodo() {
-        List<Todo> allTodo = todoRepository.findAll();
-        List<Todo> doneList = new ArrayList<>();
-        for (Todo todo : allTodo) {
-            if (todo.getIsCompleted()) {
-                doneList.add(todo);
-            }
-        }
-        todoRepository.deleteAll(doneList);
+    public List<Todo> orderByDate(Todo todo) {
+        return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "dueDate"));
     }
 }

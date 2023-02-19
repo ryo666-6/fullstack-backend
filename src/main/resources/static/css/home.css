@@ -46,6 +46,10 @@ body {
     justify-content: center;
 }
 
+.completed-todo {
+    cursor: default;
+}
+
 .last-span {
     padding-bottom: 10px;
 }

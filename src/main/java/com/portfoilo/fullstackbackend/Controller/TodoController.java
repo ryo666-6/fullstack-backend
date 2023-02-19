@@ -4,7 +4,6 @@ import com.portfoilo.fullstackbackend.Model.Todo;
 import com.portfoilo.fullstackbackend.Model.User;
 import com.portfoilo.fullstackbackend.Repository.TodoRepository;
 import com.portfoilo.fullstackbackend.Service.TodoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,7 @@ public class TodoController {
         //null回避する
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
-        model.addAttribute("todo", new Todo(todo.getId(),user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted()));
+        model.addAttribute("todo", new Todo(todo.getId(),user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted()));
         return "home";
     }
 
@@ -43,7 +42,7 @@ public class TodoController {
         if(result.hasErrors()){
             return "redirect:/todo/{id}";
         }
-        Todo userTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
+        Todo userTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted());
         todoService.addTodo(userTodo);
         System.out.println(userTodo);
         return "redirect:/todo/{id}";
@@ -58,13 +57,22 @@ public class TodoController {
         return "redirect:/todo/{id}";
     }
 
+    @PostMapping("/todo/sort/{id}")
+    public String sortByDate(Todo todo, User user) {
+        System.out.println("sort");
+        Todo sortedTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted());
+        todoService.orderByDate(sortedTodo);
+        System.out.println(sortedTodo);
+        return "redirect:/todo/{id}";
+    }
+
     @PostMapping("/todo/edit/{id}")
-    public String editTodo(@RequestParam(name = "editId",required = false)Integer todoId, Todo todo, User user ,Model model) {
+    public String editTodo(@RequestParam(name = "editId",required = false)Integer editId, Todo todo, User user ,Model model) {
         System.out.println("edit");
-        System.out.println(todoId);
-        Todo editTodo = todoService.findById(todoId);
+        System.out.println(editId);
+        Todo editTodo = todoService.findById(editId);
         Integer userId = user.getId();
-        Todo nextTodo = new Todo(editTodo.getId(),user.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted());
+        Todo nextTodo = new Todo(editTodo.getId(),user.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted(), todo.getIsDeleted());
         todoService.addTodo(nextTodo);
         model.addAttribute("nextTodo", nextTodo);
         System.out.println(nextTodo);
@@ -72,9 +80,13 @@ public class TodoController {
     }
 
     @PostMapping("/todo/delete/{id}")
-    public String deleteTodo() {
+    public String deleteTodo(@RequestParam(name = "deleteId",required = false)Integer deleteId) {
         System.out.println("delete");
-        todoService.deleteAllTodo();
+        Todo deleteTodo = todoService.findById(deleteId);
+        deleteTodo.setIsDeleted(true);
+        System.out.println(deleteTodo);
+        todoService.addTodo(deleteTodo);
+//        todoService.deleteAllTodo();
         return "redirect:/todo/{id}";
     }
 }

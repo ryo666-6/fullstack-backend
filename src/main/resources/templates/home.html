@@ -24,8 +24,12 @@
 </div>
 
 <h2>やること一覧</h2>
-<form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
-    <div th:if="${!list.isCompleted}">
+<div>
+    <form method="post" th:action="@{/todo/sort/}+${id}">
+        <button type="submit">日付順に並び替える</button>
+    </form>
+    <form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
+        <div th:if="${!list.isCompleted}">
             <input type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
             <input type="hidden" name="userId" th:value="${list.userId}">
 
@@ -36,13 +40,13 @@
 
             <input type="hidden" name="editId" th:value="${list.id}">
             <input type="submit" value="更新">
-<!--        <input type="hidden" name="editId" th:value="${todo.id}">-->
-    </div>
-</form>
-<form method="post" id="done-todo" th:action="@{/todo/update/}+${id}">
-    <input type="hidden" name="todoId" th:value="${todo.id}">
-    <input type="submit" value="完了">
-</form>
+        </div>
+    </form>
+    <form method="post" id="done-todo" th:action="@{/todo/update/}+${id}">
+        <input type="hidden" name="todoId" th:value="${todo.id}">
+        <input type="submit" value="完了">
+    </form>
+</div>
 
 <div>
     <button type="button" class="btn btn-primary p-3" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -51,8 +55,11 @@
     <div class="collapse" id="collapseExample">
         <form class="border p-3" method="post" th:action="@{/todo/delete/}+${id}" th:each="list:${list}">
             <div th:if="${list.isCompleted}">
-                <input type="text" name="title" th:value="${list.title}">
-                <input type="submit" value="削除">
+                <div th:if="${!list.isDeleted}">
+                    <input class="completed-todo" type="text" name="title" th:value="${list.title}" readonly>
+                    <input type="hidden" name="deleteId" th:value="${list.id}">
+                    <input type="submit" value="削除">
+                </div>
             </div>
         </form>
     </div>
