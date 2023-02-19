@@ -4,6 +4,7 @@ import com.portfoilo.fullstackbackend.Model.Todo;
 import com.portfoilo.fullstackbackend.Model.User;
 import com.portfoilo.fullstackbackend.Repository.TodoRepository;
 import com.portfoilo.fullstackbackend.Service.TodoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,11 +45,13 @@ public class TodoController {
         }
         Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
         todoService.addTodo(userTodo);
+        System.out.println(userTodo);
         return "redirect:/todo/{id}";
     }
 
     @PostMapping("/todo/update/{id}")
-    public String doneTodo(@RequestParam(name = "id",required = false)Integer todoId) {
+    public String doneTodo(@RequestParam(name = "todoId",required = false)Integer todoId) {
+        System.out.println(todoId);
         Todo updateTodo = todoService.findById(todoId);
         updateTodo.setIsCompleted(true);
         todoService.addTodo(updateTodo);
@@ -56,9 +59,14 @@ public class TodoController {
     }
 
     @PostMapping("/todo/edit/{id}")
-    public String editTodo(@RequestParam(name = "id",required = false)Integer todoId,Todo todo,BindingResult result, User user) {
+    public String editTodo(@RequestParam(name = "editId",required = false)Integer todoId, Todo todo, Model model) {
         System.out.println("edit");
-//        Todo editTodo = todoService.findById(todoId);
+        System.out.println(todoId);
+        Todo editTodo = todoService.findById(todoId);
+        Todo nextTodo = new Todo(editTodo.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted());
+        todoService.addTodo(nextTodo);
+        model.addAttribute("nextTodo", nextTodo);
+        System.out.println(nextTodo);
         return "redirect:/todo/{id}";
     }
 

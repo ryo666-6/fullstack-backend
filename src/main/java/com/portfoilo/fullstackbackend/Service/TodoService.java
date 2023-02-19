@@ -23,8 +23,8 @@ public class TodoService {
     }
 
     public Todo findById(Integer id) {
-        Optional<Todo> updateTodo = todoRepository.findById(id);
-        return updateTodo.get();
+        Optional<Todo> todo = todoRepository.findById(id);
+        return todo.get();
     }
 
     public void deleteAllTodo() {

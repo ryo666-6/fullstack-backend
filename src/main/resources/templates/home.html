@@ -24,18 +24,22 @@
 </div>
 
 <h2>やること一覧</h2>
-<form method="post" th:action="@{/todo/edit/}+${id}" th:each="list:${list}" th:object="${todo}">
+<form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
     <div th:if="${!list.isCompleted}">
-    <input type="checkbox" th:value="${list.id}" name="id" form="done-todo">
-    <input type="hidden" name="userId" th:value="${list.userId}">
-    <input type="text" name="title" th:value="${list.title}">
-    <input type="text" name="description" th:value="${list.description}">
-    <input type="date" name="dueDate" th:value="${list.dueDate}">
-    <input type="submit" value="更新">
+            <input type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
+            <input type="hidden" name="userId" th:value="${list.userId}">
+
+            <input type="text" name="title" th:value="${list.title}">
+            <input type="text" name="description" th:value="${list.description}">
+            <input type="date" name="dueDate" th:value="${list.dueDate}">
+
+            <input type="hidden" name="editId" th:value="${list.id}">
+            <input type="submit" value="更新">
+<!--        <input type="hidden" name="editId" th:value="${todo.id}">-->
     </div>
 </form>
 <form method="post" id="done-todo" th:action="@{/todo/update/}+${id}">
-    <input type="hidden" name="id" th:value="${todo.id}">
+    <input type="hidden" name="todoId" th:value="${todo.id}">
     <input type="submit" value="完了">
 </form>
 
