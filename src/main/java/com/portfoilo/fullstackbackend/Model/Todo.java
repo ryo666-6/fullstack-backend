@@ -44,7 +44,8 @@ public class Todo {
 
     }
 
-    public Todo(Integer userId, String title, String description, String dueDate, Integer priority, Boolean isCompleted) {
+    public Todo(Integer id, Integer userId, String title, String description, String dueDate, Integer priority, Boolean isCompleted) {
+        this.id = id;
         this.userId = userId;
         this.title = title;
         this.description = description;

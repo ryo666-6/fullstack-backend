@@ -34,7 +34,7 @@ public class TodoController {
         //null回避する
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
-        model.addAttribute("todo", new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted()));
+        model.addAttribute("todo", new Todo(todo.getId(),user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted()));
         return "home";
     }
 
@@ -43,7 +43,7 @@ public class TodoController {
         if(result.hasErrors()){
             return "redirect:/todo/{id}";
         }
-        Todo userTodo = new Todo(user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
+        Todo userTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted());
         todoService.addTodo(userTodo);
         System.out.println(userTodo);
         return "redirect:/todo/{id}";
@@ -59,11 +59,12 @@ public class TodoController {
     }
 
     @PostMapping("/todo/edit/{id}")
-    public String editTodo(@RequestParam(name = "editId",required = false)Integer todoId, Todo todo, Model model) {
+    public String editTodo(@RequestParam(name = "editId",required = false)Integer todoId, Todo todo, User user ,Model model) {
         System.out.println("edit");
         System.out.println(todoId);
         Todo editTodo = todoService.findById(todoId);
-        Todo nextTodo = new Todo(editTodo.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted());
+        Integer userId = user.getId();
+        Todo nextTodo = new Todo(editTodo.getId(),user.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted());
         todoService.addTodo(nextTodo);
         model.addAttribute("nextTodo", nextTodo);
         System.out.println(nextTodo);
