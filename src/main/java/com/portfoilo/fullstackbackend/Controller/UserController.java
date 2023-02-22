@@ -17,11 +17,10 @@ public class UserController {
     @Lazy
     private UserRegistrationService userRegistrationService;
 
-    @GetMapping("/")
-    public String showTop() {
-        return "index";
-    }
-
+//    @GetMapping("/")
+//    public String showTop() {
+//        return "home";
+//    }
 
     @GetMapping("/login")
     public String showLoginPage() {

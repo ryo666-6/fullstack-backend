@@ -8,9 +8,9 @@
 <h1 class="heading">ログイン</h1>
 <form method="post" th:action="@{/login}">
     <div class="err-text" th:if="${param.error}">
-        ログインに失敗しました
+        メールアドレスまたはパスワードが違います
     </div>
-    <div th:if="${param.logout}">
+    <div class="err-text" th:if="${param.logout}">
         ログアウトしました
     </div>
     <div class="form">

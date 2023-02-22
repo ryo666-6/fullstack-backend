@@ -22,6 +22,11 @@ public class TodoController {
     @Autowired
     TodoService todoService;
 
+    @GetMapping("/todo")
+    public String firstPage() {
+        return "redirect:/todo/{id}";
+    }
+
     @GetMapping("/todo/{id}")
     public String home(Model model, User user, Todo todo, @PathVariable("id")Integer id) {
 
@@ -29,11 +34,17 @@ public class TodoController {
         if(userId == null) {
             return "redirect:/todo/{id}";
         }
+        if(!userId.equals(id)) {
+            System.out.println("エラー");
+            return  "redirect:/login";
+        }
         //if文で、今のユーザーidとurlのユーザーを比較して、違ったらログインページへリダイレクト
         //null回避する
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
         model.addAttribute("todo", new Todo(todo.getId(),user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted()));
+        System.out.println(userId);
+        System.out.println(id);
         return "home";
     }
 
@@ -66,21 +77,20 @@ public class TodoController {
     @PostMapping("/todo/edit/{id}")
     public String editTodo(@RequestParam(name = "editId",required = false)Integer editId, Todo todo, User user ,Model model) {
         Todo editTodo = todoService.findById(editId);
-        Integer userId = user.getId();
         Todo nextTodo = new Todo(editTodo.getId(),user.getId(),todo.getTitle(),todo.getDescription(), todo.getDueDate(),todo.getPriority(),todo.getIsCompleted(), todo.getIsDeleted());
         todoService.addTodo(nextTodo);
         model.addAttribute("nextTodo", nextTodo);
         return "redirect:/todo/{id}";
     }
 
+
+
     @PostMapping("/todo/delete/{id}")
     public String deleteTodo(@RequestParam(name = "deleteId",required = false)Integer deleteId) {
         System.out.println("delete");
         Todo deleteTodo = todoService.findById(deleteId);
         deleteTodo.setIsDeleted(true);
-        System.out.println(deleteTodo);
         todoService.addTodo(deleteTodo);
-//        todoService.deleteAllTodo();
         return "redirect:/todo/{id}";
     }
 }

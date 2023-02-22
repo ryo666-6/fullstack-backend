@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Integer> {
 
-    @Query(value = "SELECT * FROM todos WHERE user_id = :id" , nativeQuery = true)
+    @Query(value = "SELECT * FROM todos WHERE user_id = :id ORDER BY priority DESC" , nativeQuery = true)
     List<Todo> find(@Param("id") Integer id);
 
 }

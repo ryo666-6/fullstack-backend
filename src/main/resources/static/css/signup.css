@@ -42,6 +42,10 @@ body {
     cursor: pointer;
 }
 
+.password-rule{
+    color: white;
+}
+
 .err-text {
     color: red;
     text: bold;

@@ -15,7 +15,7 @@
         <input th:field="*{dueDate}" class="add-input-third" type="date" placeholder="例: 2023/??/??"><br/>
         <div class="add-form">
             <span>Todoの重要度</span>
-            <input th:field="*{priority}" type="radio" name="priority" value="3" checked>大
+            <input th:field="*{priority}" type="radio" name="priority" value="3">大
             <input th:field="*{priority}" type="radio" name="priority" value="2">中
             <input th:field="*{priority}" type="radio" name="priority" value="1">小
         </div>
@@ -25,21 +25,23 @@
 
 <h2>やること一覧</h2>
 <div>
-
-    <form method="post" th:action="@{/todo/sort/}+${id}">
-        <button type="submit">日付順に並び替える</button>
-    </form>
-
     <form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
-        <div th:if="${!list.isCompleted}">
+        <div class="edit-todo" th:if="${!list.isCompleted}">
             <input type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
             <input type="hidden" name="userId" th:value="${list.userId}">
-
             <input type="text" name="title" th:value="${list.title}">
             <input type="text" name="description" th:value="${list.description}">
             <input type="date" name="dueDate" th:value="${list.dueDate}">
-            <input type="hidden" name="priority" th:value="${list.priority}">
-
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    優先度変更
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <input name="priority" type="radio" th:value="3">大
+                    <input name="priority" type="radio" th:value="2">中
+                    <input name="priority" type="radio" th:value="1">小
+                </div>
+            </div>
             <input type="hidden" name="editId" th:value="${list.id}">
             <input type="submit" value="更新">
         </div>
