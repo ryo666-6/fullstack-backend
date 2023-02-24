@@ -1,5 +1,7 @@
 package com.portfoilo.fullstackbackend.Controller;
 
+import com.portfoilo.fullstackbackend.Model.User;
+import com.portfoilo.fullstackbackend.Security.SecuritySession;
 import com.portfoilo.fullstackbackend.Service.UserRegistrationService;
 import com.portfoilo.fullstackbackend.SignupForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +19,20 @@ public class UserController {
     @Lazy
     private UserRegistrationService userRegistrationService;
 
-//    @GetMapping("/")
-//    public String showTop() {
-//        return "home";
-//    }
+    @Autowired
+    private SecuritySession securitySession;
 
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
     }
+
+//    @GetMapping(value = "/todo")
+//    public String firstPage(User user) {
+//        System.out.println(securitySession.getEmail());
+//        System.out.println(user.getEmail());
+//        return "redirect:/todo/" + user.getId();
+//    }
 
     @GetMapping("/signup")
     public String showUserRegistration(@ModelAttribute("signupForm") SignupForm signupForm) {
