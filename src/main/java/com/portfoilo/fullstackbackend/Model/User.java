@@ -24,7 +24,8 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Todo> todos = new ArrayList<>();
 
-    public User(String email, String password, String authority) {
+    public User(Integer id ,String email, String password, String authority) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.authority = authority;

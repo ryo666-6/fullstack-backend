@@ -26,13 +26,8 @@ public class TodoController {
     @Autowired
     SecuritySession securitySession;
 
-//    @GetMapping("/todo")
-//    public String firstPage(User user) {
-//        return "redirect:/todo/" + user.getId();
-//    }
-
     @GetMapping("/todo/{id}")
-    public String home(Model model, User user, Todo todo, @PathVariable("id")Integer id) {
+    public String home(Model model,User user, Todo todo, @PathVariable("id")Integer id) {
 
         Integer userId = user.getId();
         String email = user.getEmail();
@@ -45,7 +40,6 @@ public class TodoController {
         }
 
         //if文で、今のユーザーidとurlのユーザーを比較して、違ったらログインページへリダイレクト
-        //null回避する
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
         model.addAttribute("todo", new Todo(todo.getId(),user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted()));
@@ -59,7 +53,7 @@ public class TodoController {
     public String createTodo(@Validated Todo todo,BindingResult result, User user) {
         Integer userId = user.getId();
         if(result.hasErrors()){
-            return "redirect:/todo/{id}";
+            return "home";
         }
         Todo userTodo = new Todo(todo.getId() ,user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted());
         todoService.addTodo(userTodo);

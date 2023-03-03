@@ -19,22 +19,22 @@ public class Todo {
     private Integer userId;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "タイトルを入力してください")
     @Column(name = "title")
     private String title;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "詳細を入力してください")
     @Column(name = "description")
     private String description;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "日付を入力してください")
     @Column(name = "due_date")
     private String dueDate;
 
     @Column(name = "priority")
-    private Integer priority;
+    private Integer priority = 2;
 
     @NotNull
     @Column(name = "is_completed")

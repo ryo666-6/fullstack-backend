@@ -27,13 +27,6 @@ public class UserController {
         return "login";
     }
 
-//    @GetMapping(value = "/todo")
-//    public String firstPage(User user) {
-//        System.out.println(securitySession.getEmail());
-//        System.out.println(user.getEmail());
-//        return "redirect:/todo/" + user.getId();
-//    }
-
     @GetMapping("/signup")
     public String showUserRegistration(@ModelAttribute("signupForm") SignupForm signupForm) {
         return "signup";
@@ -44,7 +37,7 @@ public class UserController {
         if(result.hasErrors()) {
             return "signup";
         }
-        userRegistrationService.userRegistration(signupForm.getEmail(), signupForm.getPassword());
+        userRegistrationService.userRegistration(signupForm.getId(),signupForm.getEmail(), signupForm.getPassword());
         return "redirect:/login";
     }
 }

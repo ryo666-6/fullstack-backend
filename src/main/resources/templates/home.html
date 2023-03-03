@@ -9,17 +9,24 @@
 <h1>Todo管理</h1>
 <div>
     <form method="post" th:action="@{/todo/}+${id}" th:object="${todo}">
-        <p th:errors="*{title}" class="todo-error-message"></p>
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
         <input th:field="*{title}" class="add-input" type="text" placeholder="タイトル">
+
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         <input th:field="*{description}" class="add-input" type="text" placeholder="詳細">
+
+        <p th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
         <input th:field="*{dueDate}" class="add-input-third" type="date" placeholder="例: 2023/??/??"><br/>
+
         <div class="add-form">
-            <span>Todoの重要度</span>
+            <span class="add-priority">Todoの重要度:</span>
             <input th:field="*{priority}" type="radio" name="priority" value="3">大
-            <input th:field="*{priority}" type="radio" name="priority" value="2">中
+            <input th:field="*{priority}" type="radio" name="priority" value="2" th:checked="${todo.priority == 2}">中
             <input th:field="*{priority}" type="radio" name="priority" value="1">小
         </div>
-        <button type="submit" class="add-btn">追加</button>
+        <div class="add-btn-content">
+            <button class="add-btn" type="submit">追加</button>
+        </div>
     </form>
 </div>
 
@@ -27,42 +34,42 @@
 <div>
     <form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
         <div class="edit-todo" th:if="${!list.isCompleted}">
-            <input type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
+            <input class="edit-content" type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
             <input type="hidden" name="userId" th:value="${list.userId}">
-            <input type="text" name="title" th:value="${list.title}">
-            <input type="text" name="description" th:value="${list.description}">
-            <input type="date" name="dueDate" th:value="${list.dueDate}">
+            <input class="edit-content" type="text" name="title" th:value="${list.title}">
+            <input class="edit-content" type="text" name="description" th:value="${list.description}">
+            <input class="edit-content" type="date" name="dueDate" th:value="${list.dueDate}">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     優先度変更
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <input name="priority" type="radio" th:value="3">大
-                    <input name="priority" type="radio" th:value="2">中
-                    <input name="priority" type="radio" th:value="1">小
+                    <input class="dropdown-input pr-2" name="priority" type="radio" th:value="3" th:checked="${list.priority == 3}">大
+                    <input name="priority" type="radio" th:value="2" th:checked="${list.priority == 2}">中
+                    <input name="priority" type="radio" th:value="1" th:checked="${list.priority == 1}">小
                 </div>
             </div>
             <input type="hidden" name="editId" th:value="${list.id}">
-            <input type="submit" value="更新">
+            <input class="update-btn" type="submit" value="更新">
         </div>
     </form>
-    <form method="post" id="done-todo" th:action="@{/todo/update/}+${id}">
+    <form class="complete-btn-box" method="post" id="done-todo" th:action="@{/todo/update/}+${id}">
         <input type="hidden" name="todoId" th:value="${todo.id}">
-        <input type="submit" value="完了">
+        <input class="complete-btn" type="submit" value="チェックを入れて完了にする">
     </form>
 </div>
 
-<div>
+<div class="complete-todo-box">
     <button type="button" class="btn btn-primary p-3" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         完了したTodo表示
     </button>
     <div class="collapse" id="collapseExample">
-        <form class="border p-3" method="post" th:action="@{/todo/delete/}+${id}" th:each="list:${list}">
-            <div th:if="${list.isCompleted}">
-                <div th:if="${!list.isDeleted}">
+        <form class="p-2" method="post" th:action="@{/todo/delete/}+${id}" th:each="list:${list}">
+            <div th:if="${!list.isDeleted}">
+                <div th:if="${list.isCompleted}">
                     <input class="completed-todo" type="text" name="title" th:value="${list.title}" readonly>
                     <input type="hidden" name="deleteId" th:value="${list.id}">
-                    <input type="submit" value="削除">
+                    <input class="delete-btn" type="submit" value="削除">
                 </div>
             </div>
         </form>

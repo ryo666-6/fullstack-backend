@@ -17,8 +17,8 @@ public class UserRegistrationService {
     @Lazy
     private UserRepository userRepository;
 
-    public void userRegistration(String email, String password) {
+    public void userRegistration(Integer id ,String email, String password) {
         String hashedPassword = passwordEncoder.encode(password);
-        userRepository.saveAndFlush(new User(email, hashedPassword, "GENERAL"));
+        userRepository.saveAndFlush(new User(id, email, hashedPassword, "GENERAL"));
     }
 }
