@@ -42,6 +42,12 @@ body {
     cursor: pointer;
 }
 
+.button:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border-bottom: none;
+}
+
 .password-rule{
     color: white;
 }

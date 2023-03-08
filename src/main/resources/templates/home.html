@@ -15,7 +15,7 @@
             <input th:field="*{title}" class="add-input" type="text" placeholder="タイトル">
 
             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-            <textarea rows="1" th:field="*{description}" class="add-textarea" type="text" placeholder="詳細"></textarea>
+            <textarea rows="1" th:field="*{description}" class="add-textarea" placeholder="詳細"></textarea>
 
             <p th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
             <input th:field="*{dueDate}" class="add-input-third" type="date"><br/>
@@ -40,7 +40,7 @@
             <input class="edit-content" type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
             <input type="hidden" name="userId" th:value="${list.userId}">
             <input class="edit-content" type="text" name="title" th:value="${list.title}">
-            <textarea rows="1" class="edit-content" type="text" name="description" th:value="${list.description}"></textarea>
+            <textarea rows="1" class="edit-content" name="description" th:value="${list.description}" type="text">[[${list.description}]]</textarea>
             <input class="edit-content" type="date" name="dueDate" th:value="${list.dueDate}">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

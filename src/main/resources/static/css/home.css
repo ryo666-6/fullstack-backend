@@ -60,6 +60,11 @@ body {
         cursor: pointer;
         margin-bottom: 10px;
 }
+.add-btn:active {
+    -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+      border-bottom: none;
+}
 
 .todo {
     display: inline-block;
@@ -81,6 +86,12 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     margin-bottom: 10px;
+}
+
+.update-btn:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border-bottom: none;
 }
 
 .edit-todo {
@@ -118,6 +129,12 @@ body {
     margin-bottom: 10px;
 }
 
+.complete-btn:active{
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border-bottom: none;
+}
+
 .last-span {
     padding-bottom: 10px;
 }
@@ -132,6 +149,12 @@ body {
         margin-bottom: 10px;
 }
 
+.delete-btn:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border-bottom: none;
+}
+
 .logout-button {
     border-radius: 10px;
     border: none;
@@ -140,4 +163,10 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.logout-button:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    border-bottom: none;
 }
