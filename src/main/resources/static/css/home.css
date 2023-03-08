@@ -170,3 +170,13 @@ body {
     transform: translateY(4px);
     border-bottom: none;
 }
+
+.err-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.err-msg {
+    color: red;
+    padding-right: 5px;
+}

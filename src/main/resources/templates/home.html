@@ -9,15 +9,14 @@
 <h1>Todo管理</h1>
 <div>
     <form method="post" th:action="@{/todo/}+${id}" th:object="${todo}">
-
+        <div class="err-content">
+            <p class="err-msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            <p class="err-msg" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+            <p class="err-msg" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
+        </div>
         <div class="add-content">
-            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
             <input th:field="*{title}" class="add-input" type="text" placeholder="タイトル">
-
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
             <textarea rows="1" th:field="*{description}" class="add-textarea" placeholder="詳細"></textarea>
-
-            <p th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
             <input th:field="*{dueDate}" class="add-input-third" type="date"><br/>
         </div>
 

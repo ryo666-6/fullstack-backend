@@ -50,5 +50,6 @@ body {
 .err-text {
     color: red;
     text: bold;
+    margin-left: 14px;
 }
 

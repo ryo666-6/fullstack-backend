@@ -8,11 +8,11 @@ public class SignupForm {
     @Id
     private Integer id;
 
-    @NotBlank(message = "メールアドレスを入力してください")
+    @NotBlank(message = "メールアドレスは必須です")
     @Email
     private String email;
 
-    @NotBlank(message = "パスワードを入力する")
+    @NotBlank(message = "パスワードは必須です")
     @Pattern(regexp="^((?=.*[0-9])(?=.*[a-z]).{6,})$", message="パスワードは6文字以上の英数字で入力してください")
     private String password;
 

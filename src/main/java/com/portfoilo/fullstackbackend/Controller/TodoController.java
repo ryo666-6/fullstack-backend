@@ -3,7 +3,6 @@ package com.portfoilo.fullstackbackend.Controller;
 import com.portfoilo.fullstackbackend.Model.Todo;
 import com.portfoilo.fullstackbackend.Model.User;
 import com.portfoilo.fullstackbackend.Repository.TodoRepository;
-import com.portfoilo.fullstackbackend.Security.SecuritySession;
 import com.portfoilo.fullstackbackend.Service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,29 +22,21 @@ public class TodoController {
     @Autowired
     TodoService todoService;
 
-    @Autowired
-    SecuritySession securitySession;
-
     @GetMapping("/todo/{id}")
     public String home(Model model,User user, Todo todo, @PathVariable("id")Integer id) {
 
         Integer userId = user.getId();
-        String email = user.getEmail();
+
         if(userId == null) {
             return "redirect:/todo/"+userId;
         }
         if(!userId.equals(id)) {
-            System.out.println("エラー");
             return  "redirect:/login";
         }
 
-        //if文で、今のユーザーidとurlのユーザーを比較して、違ったらログインページへリダイレクト
         List<Todo> list = todoRepository.find(userId);
         model.addAttribute("list", list);
         model.addAttribute("todo", new Todo(todo.getId(),user.getId(), todo.getTitle(), todo.getDescription(), todo.getDueDate(), todo.getPriority(), todo.getIsCompleted(), todo.getIsDeleted()));
-        System.out.println(userId);
-        System.out.println(id);
-        System.out.println(securitySession.getEmail());
         return "home";
     }
 

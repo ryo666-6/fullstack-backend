@@ -13,10 +13,10 @@
     <div class="form">
         <label class="email-text" for="email">メール</label>
         <input class="form-input" type="email" id="email" name="email" placeholder="メールアドレス" th:value="${signupForm.email}"><br>
-        <div th:if="${#fields.hasErrors('email')}" th:errors="${signupForm.email}"></div>
+        <p class="err-text" th:if="${#fields.hasErrors('email')}" th:errors="${signupForm.email}"></p>
         <label class="pass-text" for="password">6文字以上の英数字パスワード</label>
         <input class="form-input" type="password" id="password" name="password" placeholder="パスワード" th:value="${signupForm.password}"><br>
-        <div th:if="${#fields.hasErrors('password')}" th:errors="${signupForm.password}"></div>
+        <p class="err-text" th:if="${#fields.hasErrors('password')}" th:errors="${signupForm.password}"></p>
         <button class="button" type="submit">登録</button>
     </div>
 </form>
