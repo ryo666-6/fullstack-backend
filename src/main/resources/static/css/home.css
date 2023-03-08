@@ -15,6 +15,12 @@ body {
         margin-bottom: 10px;
 }
 
+.add-content {
+    display: flex;
+        align-items: center;
+        justify-content: center;
+}
+
 .add-priority {
     padding-right: 10px;
 }
@@ -22,12 +28,21 @@ body {
 .add-input {
     border: none;
     padding: 5px 7px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+.add-textarea {
+    border: none;
+    padding: 5px 7px;
+    margin-bottom: 10px;
+    margin-right: 5px;
 }
 
 .add-input-third {
     border: none;
     padding: 5px 7px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .add-btn-content {

@@ -23,6 +23,7 @@ public class UserController {
     private SecuritySession securitySession;
 
     @GetMapping("/login")
+    // /todoに飛ばす
     public String showLoginPage() {
         return "login";
     }
