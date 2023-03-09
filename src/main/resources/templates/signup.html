@@ -8,7 +8,7 @@
 <h1 class="heading">ユーザー登録</h1>
 <form method="post" th:action="@{/signup}" th:object="${signupForm}">
     <div th:if="${signupError}">
-        <div class="err-text" th:text="${signupError}"></div>
+        <div class="err-text-first" th:text="${signupError}"></div>
     </div>
     <div class="form">
         <label class="email-text" for="email">メール</label>

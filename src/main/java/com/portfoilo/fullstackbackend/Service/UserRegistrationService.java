@@ -19,6 +19,6 @@ public class UserRegistrationService {
 
     public void userRegistration(Integer id ,String email, String password) {
         String hashedPassword = passwordEncoder.encode(password);
-        userRepository.saveAndFlush(new User(id, email, hashedPassword, "GENERAL"));
+        userRepository.saveAndFlush(new User(id, email, hashedPassword));
     }
 }

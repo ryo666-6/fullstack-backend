@@ -15,9 +15,12 @@
             <p class="err-msg" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
         </div>
         <div class="add-content">
-            <input th:field="*{title}" class="add-input" type="text" placeholder="タイトル">
-            <textarea rows="1" th:field="*{description}" class="add-textarea" placeholder="詳細"></textarea>
-            <input th:field="*{dueDate}" class="add-input-third" type="date"><br/>
+            <input th:field="*{title}" class="add-input" name="title" type="text" placeholder="タイトル">
+
+            <textarea rows="1" th:field="*{description}" name="description" class="add-textarea" placeholder="詳細"></textarea>
+
+            <input th:field="*{dueDate}" name="dueDate" class="add-input-third" type="date"><br/>
+
         </div>
 
         <div class="add-form">
@@ -36,10 +39,10 @@
 <div>
     <form method="post" th:action="@{/todo/edit/}+${id}" th:object="${todo}" th:each="list:${list}">
         <div class="edit-todo" th:if="${!list.isCompleted}">
-            <input class="edit-content" type="checkbox" th:value="${list.id}" name="todoId" form="done-todo">
+            <input class="edit-content" type="checkbox"  th:value="${list.id}" name="todoId" form="done-todo">
             <input type="hidden" name="userId" th:value="${list.userId}">
             <input class="edit-content" type="text" name="title" th:value="${list.title}">
-            <textarea rows="1" class="edit-content" name="description" th:value="${list.description}" type="text">[[${list.description}]]</textarea>
+            <textarea rows="1" class="edit-content" name="description" th:value="${list.description}">[[${list.description}]]</textarea>
             <input class="edit-content" type="date" name="dueDate" th:value="${list.dueDate}">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

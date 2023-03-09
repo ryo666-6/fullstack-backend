@@ -41,7 +41,7 @@ public class TodoController {
     }
 
     @PostMapping("/todo/{id}")
-    public String createTodo(@Validated Todo todo,BindingResult result, User user) {
+    public String createTodo(@Validated Todo todo, BindingResult result, User user) {
         Integer userId = user.getId();
         if(result.hasErrors()){
             return "home";

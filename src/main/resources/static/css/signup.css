@@ -56,3 +56,10 @@ body {
     color: red;
     text: bold;
 }
+
+.err-text-first {
+    color: blue;
+    text: bold;
+}
+
+
